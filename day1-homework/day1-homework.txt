@@ -1,0 +1,7 @@
+fastqc SRR072893.fastq
+hisat2-build BDGP6.fa
+hisat2 -x BDGP6 SRR072893.fastq -p 4 -S number2.sam
+samtools sort number2.sam > number2.sam.sort
+samtools view -bS number2.same.sort > number2.sort.bam
+samtools view -b number2.sort.bam
+stringtie number2.sort.bam -G BDGP6.Ensembl.81.gtf -p 4 -o Trascript.quant -e -B
