@@ -1,0 +1,89 @@
+#!/usr/bin/env python 
+""""
+timeplot distribution of FBtr0331261 transcript in female
+"""
+
+import sys
+import pandas as pd
+import numpy as np
+import os
+import matplotlib.pyplot as plt
+
+transcript = "FBtr0331261"
+
+df_samples = pd.read_csv( sys.argv[1]) 
+df_replicates = pd.read_csv( sys.argv[3]) 
+
+
+soi = df_samples["sex"] == "female"
+soim = df_samples["sex"] == "male"
+soif = df_replicates["sex"] == "female"
+soifm = df_replicates["sex"] == "male"
+
+
+
+fpkms_females = []
+for sample in df_samples["sample"] [soi]:
+        
+        fname = os.path.join( sys.argv[2], sample, "t_data.ctab" ) #fname is filename, builds file path to sample
+        df = pd.read_csv( fname, sep="\t" )
+        roi = df ["t_name"] == transcript
+#print df_gene
+
+        fpkms_females.append(df[roi]["FPKM"].values) #.values pulls out values 
+
+
+
+
+
+fpkms_females_frags = [None, None, None, None]
+
+for sample in df_replicates["sample"] [soif]:
+        
+        fname = os.path.join( sys.argv[2], sample, "t_data.ctab" ) #fname is filename, builds file path to sample
+        df = pd.read_csv( fname, sep="\t" )
+        roi = df ["t_name"] == transcript
+#print df_gene
+        fpkms_females_frags.append(df[roi]["FPKM"].values[0]) #.values pulls out valu
+       
+       
+        
+fpkms_males = []
+for sample in df_samples["sample"] [soim]:
+        
+        fname = os.path.join( sys.argv[2], sample, "t_data.ctab" ) #fname is filename, builds file path to sample
+        df = pd.read_csv( fname, sep="\t" )
+        roi = df ["t_name"] == transcript
+#print df_gene
+
+        fpkms_males.append(df[roi]["FPKM"].values) #.values pulls out values 
+        
+fpkms_males_frags = [None, None, None, None]
+for sample in df_replicates["sample"] [soifm]:
+        
+        fname = os.path.join( sys.argv[2], sample, "t_data.ctab" ) #fname is filename, builds file path to sample
+        df = pd.read_csv( fname, sep="\t" )
+        roi = df ["t_name"] == transcript
+#print df_gene
+
+        fpkms_males_frags.append(df[roi]["FPKM"].values) #.values pulls out value
+
+x_axis_labels = [0,1,2,3,4,5,6,7]
+        
+        #(range(len(fpkms_females))
+plt.figure()
+plt.title("Day 4 homework") 
+plt.plot( fpkms_females, c = "red", label="female" ) 
+plt.plot( fpkms_males, c = "blue", label="male" )
+plt.plot( x_axis_labels, fpkms_males_frags, 'o', c="green", label="male replicates" )
+plt.plot( fpkms_females_frags, 'o', label="female replicates")  
+plt.legend( bbox_to_anchor=(1.05, 1), loc=2.0, borderaxespad=0. )
+plt.xlabel("developmental stage")
+#plt.yticks(range(len(fpkms_females)), ["0", "50", "100", "150", "200", "250", "300"])
+plt.ylabel("mRNA abundance(RPKM)")
+plt.xticks(range(len(fpkms_females)), ["10", "11", "12", "13", "14A", "14B", "14C", "14D"])
+
+plt.subplots_adjust(left=0.1, right=0.7, top=0.9, bottom=0.1)
+plt.savefig( "timecourse_homework" )
+plt.close() 
+
