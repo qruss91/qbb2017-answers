@@ -1,0 +1,32 @@
+#!/usr/bin/env python 
+""""
+timeplot distribution of FBtr0331261 transcript in female
+"""
+
+import sys
+import pandas as pd
+import numpy as np
+import os
+import matplotlib.pyplot as plt
+
+transcript = "FBtr0331261"
+
+df_samples = pd.read_csv( sys.argv[1]) 
+soi = df_samples["sex"] == "female"
+
+fpkms = []
+for sample in df_samples["sample"] [soi]:
+        
+        fname = os.path.join( sys.argv[2], sample, "t_data.ctab" ) #fname is filename, builds file path to sample
+        df = pd.read_csv( fname, sep="\t" )
+        roi = df ["t_name"] == transcript
+#print df_gene
+
+        fpkms.append(df[roi]["FPKM"].values) #.values pulls out values 
+        
+    
+        
+plt.figure()
+plt.plot( fpkms)
+plt.savefig( "timecourse" )
+plt.close() 
