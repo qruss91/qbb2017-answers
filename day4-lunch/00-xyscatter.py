@@ -27,12 +27,12 @@ df2_fpkm= pd.read_csv(sys.argv[2], sep="\t")
 log_fpkm1 = np.log1p(df1_fpkm["FPKM"])
 log_fpkm2 = np.log1p(df2_fpkm["FPKM"])
 
-x = log_fpkm1
+x = log_fpkm1 #DEFINE EVERYTHING THEN PLUG IT IN (see line 38)
 y = log_fpkm2
 
 
 plt.figure()
-plt.scatter( log_fpkm1, log_fpkm2, alpha = 0.2, c = "green" )
+plt.scatter( log_fpkm1, log_fpkm2, alpha = 0.05, c = "green" )
 plt.xlabel("SRR072893")              # label the x-axis
 plt.ylabel("SRR072915")
 plt.plot(np.unique(x), np.poly1d(np.polyfit(x, y, 1))(np.unique(x)))
