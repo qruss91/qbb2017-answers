@@ -1,0 +1,37 @@
+velveth week2_contig 31 -fastq -shortPaired -interleaved reads_low_1.fastq reads_low_2.fastq
+velvetg week2_contig/
+
+Spades usage
+/usr/local/bin/spades.py [options] -o <output_dir>
+-k separates Khmers by size
+
+ /usr/local/bin/spades.py --12 reads_low_1.fastq --12 reads_low_2.fastq -o week2_spades --only-assembler
+
+./01_sort_contigs week2_contig/contigs.fa 
+Max = 998
+Min = 61
+Mean = 186.796721311
+L/2 = 28486
+N50 = 255
+# of contains = 305
+
+./01_sort_contigs week2_spades/contigs.fasta 
+Max = 1409
+Min = 207
+Mean = 379.81300813
+L/2 = 23358
+N50 = 373
+# of contains = 123
+
+
+lastz reference.fasta week2_contig/contigs.fa --chain --format=general:zstart1,size2,name1,end1 > velvet.lastz.tsv
+
+
+sort -k 1,1 -n  velvet.lastz.ts > dot.plot.velvet
+
+./02_plot_dot dot.plot.velvet 
+
+quast ./week2_contig/contigs.fa ./week2_spades/contigs.fasta ./week2_MAP006/contigs.fasta ./week2_Reads/contigs.fa ./week2_Reads_spades/contigs.fasta -R reference.fasta 
+
+
+
