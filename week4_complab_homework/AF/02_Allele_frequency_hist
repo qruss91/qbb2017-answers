@@ -1,0 +1,32 @@
+#!/usr/bin/env python
+"""
+Plots allele frequency 
+"""
+
+import sys
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import os
+
+data = open(sys.argv[1])
+ 
+freqs = []
+
+for d in data:
+    if d.startswith( "#" ):
+        continue
+    segs = d.rstrip("\r\n").split()
+    
+    line = segs[7][3:].split(',')
+    for freq in line:
+        print line
+        freqs.append(float(freq))
+
+plt.figure()
+plt.hist(freqs, bins=50)
+plt.title("Allele Frequency")
+plt.xlabel("Allele")
+plt.ylabel("Frequency")
+plt.savefig("AllelePlot.png")
+plt.close
