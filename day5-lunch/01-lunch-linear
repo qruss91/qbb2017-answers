@@ -6,44 +6,26 @@ import numpy as np
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
 
-df = pd.read_csv( sys.argv[2], sep="\t" )
-
+df = pd.read_cs( sys.argv[2], sep="\t")
 coi = ["FPKM"]
 
-fpkm = []
-
-for value in df[coi].values:
-    fpkm.append(float(value))
-
-f = open( sys.argv[1])
-linear_regression_1 = []
+fpkms = df[coi].values
 
 
-for line in f:
-    fields = line.rstrip("\r\n").split("\t")
-    linear_regression_1.append(float(fields[5]))
-    
-x= linear_regression_1
-y = fpkm
-xc = sm.add_constant(x)
+def lin_fit(hist_bed):
+    name_list = ['name', 'size', 'covered', 'mean0', 'mean']
+    fpkm_df = pd.read_csv( sys.argv[2], sep='\t')
+    hist_df = pd.read_csv( hist_bed, sep='\t', names=name_list )
+    ['FPKM']
+    ['mean']
+    hist_list_c = sm.add_constant(hist_list)
+    model = sm.OLS(fpkm_list, hist_list_c)
+    results = model.fit()
+    print results.summary()
+lin_fit( sys.argv[1] )
 
 
 
-    
-model = sm.OLS(linear_regression_1, fpkm)
-results = model.fit()
-print results.rsquared
-print results.summary()
-
-"""
-plt.figure()
-plt.scatter(linear_regression_1, fpkm, alpha= 0.4, c="green")
-plt.title(str(sys.argv[1]))
-plt.ylabel("mRNA abundance (FPKM)")
-plt.xlabel("bigWigAVG")
-plt.savefig( sys.argv[3] + ".png", bbox_inches="tight")
-
-"""
 
 
 

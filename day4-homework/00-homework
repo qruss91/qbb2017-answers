@@ -48,7 +48,7 @@ for sample in df_replicates["sample"] [soif]:
        
        
         
-fpkms_males = []
+fpkms_males = []#can use dictionary {} to minimize script length, but will require more complicated code
 for sample in df_samples["sample"] [soim]:
         
         fname = os.path.join( sys.argv[2], sample, "t_data.ctab" ) #fname is filename, builds file path to sample

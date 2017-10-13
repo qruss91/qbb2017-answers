@@ -23,5 +23,5 @@ plt.xlabel("Contig Names")
 plt.ylabel("Position")
 plt.xlim(0,100000)
 plt.ylim(0,100000)
-plt.savefig( "size_velvet_align_plot" + ".png")
+plt.savefig( "size_Reads_spade_align_plot" + ".png")
 plt.close
