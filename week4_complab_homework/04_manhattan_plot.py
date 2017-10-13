@@ -24,8 +24,8 @@ for i in seg:
         continue
     lines += 1
 
-
-for i in range(liness):
+# MAX change liness to lines
+for i in range(lines):
     p_sig.append(None)
     p_nosig.append(None)
 

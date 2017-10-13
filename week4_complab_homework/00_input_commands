@@ -1,0 +1,15 @@
+1.  gunzip BYxRM_segs_saccer3.bam.simplified.vcf\ \(1\) 
+2. plink2 --freq --vcf BYxRM_segs_saccer3.bam.simplified.vcf\ \(1\) --allow-extra-chr "for allele frequency"
+
+3. plink2 --pca 2 tabs --allow-extra-chr --vcf BYxRM_segs_saccer3.bam.simplified.vcf\ \(1\) --mind
+
+4. PCA plot: ../01_pca_scatterplot plink.eigenvec 
+
+5. Allele Frequency Plot: ./AF/02_Allele_frequency_hist BYxRM_segs_saccer3.bam.simplified.vcf 
+
+6. x46 :
+./000_plink_assist_KR-help BYxRM_PhenoData.txt pheno_filter.txt
+
+plink2 --vcf BYxRM_segs_saccer3.bam.simplified.vcf --pheno pheno_filter.txt --allow-no-sex --linear --allow-extra-chr --all-pheno
+
+ ./03_Manhattan_plot.py

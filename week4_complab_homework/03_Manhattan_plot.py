@@ -62,10 +62,12 @@ new_list = [
 none_sig = [None] * len(new_list)
 none_non_sig = [None] * len(new_list)
 
-
-for i in range(len(list)):
-	os.systems("./04_Manhattan_plot.py" + str(new_list[i]) + " " + str(new_list[i][6:9]))
-
-
+# MAX: Change len(list) to len(new_list)
+for i in range(len(new_list)):
+	# MAX: change this line
+    # os.systems("./04_Manhattan_plot.py" + str(new_list[i]) + " " + str(new_list[i][6:9]))
+    # to this...
+    command = './04_Manhattan_plot.py %s %s' % (new_list[i], new_list[i].split('.')[1])
+    os.system( command )
 
 
