@@ -1,0 +1,17 @@
+bowtie2-build chr19.fa input_chr19_ref
+bowtie2 -x input_chr19_ref -U CTCF_ER4.fastq -S CTCF_ER4.sam
+
+samtools view -bS input_ER4.sam > input_ER4.bam
+samtools sort input_ER4.bam > sort_input_ER4 
+
+macs2 callpeak -t sort_CTCF_G1E -c -f BAM -g mm -n ER4 -B -q 0.01 > G1E_no_control
+
+bedtools intersect -a G1E_peaks.narrowPeak -b ER4_peaks.narrowPeak -v > diff_lost.bed
+bedtools intersect -a ER4_peaks.narrowPeak -b G1E_peaks.narrowPeak -v > diff_gain.bed
+
+bedtools getfasta -fi chr19.fa -bed G1E_peaks.narrowPeak > G1E.fa
+bedtools getfasta -fi chr19.fa -bed ER4_peaks.narrowPeak > ER4.fa
+
+cat G1E.fa ER4.fa > CTCF_motif.fa
+
+/usr/local/opt/meme/bin/meme-chip -db motif_folder/ CTCF_motif.fa
