@@ -1,0 +1,57 @@
+#!/usr/bin/env python
+
+import sys
+import numpy as np
+import scipy.cluster as hac
+import matplotlib.pyplot as plt
+from scipy.cluster.hierarchy import linkage, leaves_list, dendrogram
+import scipy.spatial.distance as dist
+from sklearn.cluster import KMeans
+import pandas as pd
+
+array = np.loadtxt(sys.argv[1], dtype = str)
+headerless_array = np.delete(array, (0), axis=0)
+final_array = headerless_array[:,1:]
+float_array = final_array.astype(np.float)
+Z = linkage(float_array, method = 'average')
+Y = leaves_list( Z )
+
+ZT = linkage(float_array.T, method = 'average')
+YT = leaves_list( ZT )
+transformed_array = float_array[ Y, : ][ : , YT]
+
+labels = ['CFU', 'poly', 'unk', 'int', 'mys', 'mid']
+
+kmeans = KMeans( n_clusters=5, random_state=0 )
+kmeans.fit( float_array )
+k_clusters = kmeans.predict( float_array )
+float_array = pd.merge( pd.DataFrame(float_array, columns=labels), pd.DataFrame( k_clusters, columns=['cluster'] ), left_index=True, right_index=True )
+KmeansD = float_array.sort_values('cluster')[labels].values
+
+
+plt.figure()
+plt.grid( False )
+plt.title("Cluster Map")
+plt.imshow(transformed_array, aspect='auto', interpolation='nearest')
+plt.colorbar()
+plt.yticks( [] )
+plt.xticks( [ x for x in range(6) ], labels )
+plt.savefig( 'heatmap.png' )
+plt.close
+
+plt.figure()
+dendrogram( ZT, labels=labels)
+plt.savefig( 'dendrogram.png' )
+plt.close()
+
+plt.figure()
+plt.grid( False )
+plt.title("Kmeans")
+plt.imshow(KmeansD, aspect='auto', interpolation='nearest')
+plt.colorbar()
+plt.yticks( [] )
+plt.xticks( [ x for x in range(6) ], labels )
+plt.savefig( 'kmeans.png' )
+plt.close
+
+
