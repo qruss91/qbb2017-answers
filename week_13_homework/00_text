@@ -1,0 +1,9 @@
+1) The most common microbe present across the timeline was Enterococcus faecalis. After an initial surge, the bacteria's population does decrease over time. Staphylococcus epidermidis would  increase over time however. The cutibacterium avidum population would appear to vary the most, initially being abundant before decreasing through day 1 and going back up by day 8.
+
+2) We can group contigs read abundance and by the GC content. We can also group them by their kmer profiles (how often each kmer occurs in each conting).
+
+3) There are 8 bins, which are roughly equal in size, with bins 4 and 7 being the largest. I would say things are appropriately sized, although I'm not confident in it's purity considering the content of E. faecalis in data. 
+
+4) To accurately estimate taxonomy of a bin, you could compare the KRAKEN designations of a bin with each assembled contig, rather than a single contig. You could then find whichever counts came back with the highest values.
+
+5) The heatmap matches the trends outlined in the taxonomy distributions. There were extra entries in the given abundance file, but Max was able to show me how to remove them and edit my heat-mapping script from the previous week. 
